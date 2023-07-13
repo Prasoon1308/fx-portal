@@ -1,4 +1,5 @@
 const hre = require("hardhat");
+const config = require("../config/config.json");
 
 async function main() {
   const ERC20 = await hre.ethers.getContractFactory("FxERC20");
@@ -7,40 +8,53 @@ async function main() {
   console.log("ERC20 deployed to:", erc20.address);
   console.log("npx hardhat verify --network goerli", erc20.address);
 
-  const ERC20Mintable = await hre.ethers.getContractFactory("FxERC20");
+  const ERC20Mintable = await hre.ethers.getContractFactory("FxMintableERC20");
   const erc20Mintable = await ERC20Mintable.deploy();
-  console.log(erc20Mintable.deployTransaction);
+  // console.log(erc20Mintable.deployTransaction);
   await erc20Mintable.deployTransaction.wait();
   console.log("ERC20Mintable deployed to:", erc20Mintable.address);
   console.log("npx hardhat verify --network mumbai", erc20Mintable.address);
 
   const ERC721 = await hre.ethers.getContractFactory("FxERC721");
   const erc721 = await ERC721.deploy();
-  console.log(erc721.deployTransaction);
+  // console.log(erc721.deployTransaction);
   await erc721.deployTransaction.wait();
   console.log("ERC721 deployed to:", erc721.address);
   console.log("npx hardhat verify --network goerli", erc721.address);
 
-  const ERC721Mintable = await hre.ethers.getContractFactory("FxERC721");
+  const ERC721Mintable = await hre.ethers.getContractFactory("FxMintableERC721");
   const erc721Mintable = await ERC721Mintable.deploy();
-  console.log(erc721Mintable.deployTransaction);
+  // console.log(erc721Mintable.deployTransaction);
   await erc721Mintable.deployTransaction.wait();
   console.log("ERC721Mintable deployed to:", erc721Mintable.address);
   console.log("npx hardhat verify --network mumbai", erc721Mintable.address);
 
   const ERC1155 = await hre.ethers.getContractFactory("FxERC1155");
   const erc1155 = await ERC1155.deploy();
-  console.log(erc1155.deployTransaction);
+  // console.log(erc1155.deployTransaction);
   await erc1155.deployTransaction.wait();
   console.log("ERC1155 deployed to:", erc1155.address);
   console.log("npx hardhat verify --network goerli", erc1155.address);
 
-  const ERC1155Mintable = await hre.ethers.getContractFactory("FxERC1155");
+  const ERC1155Mintable = await hre.ethers.getContractFactory("FxMintableERC1155");
   const erc1155Mintable = await ERC1155Mintable.deploy();
-  console.log(erc1155Mintable.deployTransaction);
+  // console.log(erc1155Mintable.deployTransaction);
   await erc1155Mintable.deployTransaction.wait();
   console.log("ERC1155Mintable deployed to:", erc1155Mintable.address);
   console.log("npx hardhat verify --network mumbai", erc1155Mintable.address);
+
+  const Root = await hre.ethers.getContractFactory("FxRoot");
+  const root = await Root.deploy(config.testnet.stateSender.address);
+  await root.deployTransaction.wait();
+  console.log("FxRoot deployed to:", root.address);
+  console.log("npx hardhat verify --network goerli", root.address);
+
+  const Child = await hre.ethers.getContractFactory("FxChild");
+  const child = await Child.deploy();
+  await child.deployTransaction.wait();
+  console.log("FxChild deployed to:", child.address);
+  // console.log("npx hardhat verify --network goerli", root.address);
+
 }
 
 main()
