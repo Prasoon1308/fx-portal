@@ -5,15 +5,18 @@ import {ERC20} from "../../lib/ERC20.sol";
 import {Create2} from "../../lib/Create2.sol";
 import {FxBaseRootTunnel} from "../../tunnel/FxBaseRootTunnel.sol";
 import {SafeERC20, IERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {Ownable} from "../../lib/Ownable.sol";
 
 /**
  * @title FxERC20RootTunnel
  */
-contract FxERC20RootTunnel is FxBaseRootTunnel, Create2 {
+contract FxERC20RootTunnel is FxBaseRootTunnel, Create2, Ownable {
     using SafeERC20 for IERC20;
     // maybe DEPOSIT and MAP_TOKEN can be reduced to bytes4
     bytes32 public constant DEPOSIT = keccak256("DEPOSIT");
     bytes32 public constant MAP_TOKEN = keccak256("MAP_TOKEN");
+    uint8 public commissionRate;
+    address adminWallet;
 
     event TokenMappedERC20(address indexed rootToken, address indexed childToken);
     event FxWithdrawERC20(
@@ -39,8 +42,9 @@ contract FxERC20RootTunnel is FxBaseRootTunnel, Create2 {
     ) FxBaseRootTunnel(_checkpointManager, _fxRoot) {
         // compute child token template code hash
         childTokenTemplateCodeHash = keccak256(minimalProxyCreationCode(_fxERC20Token));
+        adminWallet = msg.sender;
     }
-
+    
     /**
      * @notice Map a token to enable its movement via the PoS Portal, callable by everyone
      * @param rootToken address of token on root chain
@@ -69,12 +73,28 @@ contract FxERC20RootTunnel is FxBaseRootTunnel, Create2 {
         emit TokenMappedERC20(rootToken, childToken);
     }
 
+    function commission(uint8 rate) public onlyOwner{
+        commissionRate = rate;
+    }
+
     function deposit(address rootToken, address user, uint256 amount, bytes memory data) public {
         // map token if not mapped
         if (rootToChildTokens[rootToken] == address(0x0)) {
             mapToken(rootToken);
         }
 
+        uint256 commissionFees = (amount*commissionRate)/100; // value to be set by function, commission rate, extra fees and not 
+        
+        // Calculate the total amount to transfer to the contract address, including the commission fees
+        uint256 totalAmount = amount + commissionFees;  
+
+        // Transfer the commission fees to the admin wallet
+        IERC20(rootToken).safeTransferFrom(
+            msg.sender, // depositor
+            adminWallet, // admin wallet address
+            commissionFees
+        );
+        
         // transfer from depositor to this contract
         IERC20(rootToken).safeTransferFrom(
             msg.sender, // depositor
