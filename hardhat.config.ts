@@ -5,6 +5,8 @@ import "hardhat-deploy";
 import "solidity-coverage";
 import "hardhat-contract-sizer";
 import "hardhat-gas-reporter";
+import 'dotenv/config';
+import("@nomiclabs/hardhat-etherscan");
 
 import { HardhatUserConfig } from "hardhat/types";
 
@@ -42,6 +44,10 @@ export default {
       url: process.env.MUMBAI_RPC || "https://rpc-mumbai.maticvigil.com",
       accounts,
     },
+    puppynet: {
+      url: "https://puppynet.shibrpc.com",
+      accounts,
+    }
   },
   solidity: {
     version: "0.8.17",

@@ -37,7 +37,45 @@
       "address": "0xAf21e1B1F2e8711a95AB4cAa579885224a8e3461"
     }
   },
-  "testnet": {
+  "mumbai": {
+    "fxRoot": {
+      "address": "0x3d1d3E34f7fB6D26245E6640E1c50710eFFf15bA"
+    },
+    "fxChild": {
+      "address": "0xCf73231F28B7331BBe3124B907840A94851f9f11"
+    },
+    "checkpointManager": {
+      "address": "0x2890bA17EfE978480615e330ecB65333b880928e"
+    },
+    "fxERC20": {
+      "address": "0x62757EB8B0d25661B0D7CE4253c318E4Fb3b1a1e"
+    },
+    "fxMintableERC20": {
+      "address": "0x78b7f6A6b7b1d310C706361Ce0E98a7081786026"
+    },
+    "rootFxERC20": {
+      "address": "0x6dd0F2215Ce78fED85BC5d48C8eA7199201f2F64"
+    },
+    "fxERC721": {
+      "address": "0xf2720927E048726267C0221ffA41A88528048726"
+    },
+    "fxMintableERC721": {
+      "address": "0x86248f99CC4f03E2f01a11E99BbB742DF3a5F3c7"
+    },
+    "rootFxERC721": {
+      "address": "0x55671d7a0C6062Bb5989bb5F460936A9B64d8C79"
+    },
+    "fxERC1155": {
+      "address": "0x80be8Cf927047A40d3f5791BF7436D8c95b3Ae5C"
+    },
+    "fxMintableERC1155": {
+      "address": "0xfeAfb79fb21AF628B4e30312e9C5361f171B410A"
+    },
+    "rootFxERC1155": {
+      "address": "0x83E45874538bEd57BAc3f60312699258634D551c"
+    }
+  },
+  "puppynet": {
     "fxRoot": {
       "address": "0x3d1d3E34f7fB6D26245E6640E1c50710eFFf15bA"
     },
