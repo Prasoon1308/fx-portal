@@ -28,25 +28,12 @@ async function main() {
     erc1155Token = config.mainnet.fxERC1155.address;
     erc1155MintableToken = config.mainnet.fxMintableERC1155.address;
     rootERC1155Token = config.mainnet.rootFxERC1155.address;
-  } else if (network.chainId === 80001) {
-    // Mumbai Testnet
-    fxChild = config.mumbai.fxChild.address;
-    erc20MintableToken = config.mumbai.fxMintableERC20.address;
-    rootERC20Token = config.mumbai.rootFxERC20.address;
-    erc721Token = config.mumbai.fxERC721.address;
-    erc721MintableToken = config.mumbai.fxMintableERC721.address;
-    rootERC721Token = config.mumbai.rootFxERC721.address;
-    erc1155Token = config.mumbai.fxERC1155.address;
-    erc1155MintableToken = config.mumbai.fxMintableERC1155.address;
-    rootERC1155Token = config.mumbai.rootFxERC1155.address;
-  } else {
-    fxChild = process.env.FX_CHILD;
-    erc20Token = process.env.FX_ERC20;
-    erc20MintableToken = process.env.FX_ERC20_MINTABLE;
-    // erc721Token = process.env.FX_ERC721;
-    // erc721MintableToken = process.env.FX_ERC721_MINTABLE;
-    // erc1155Token = process.env.FX_ERC1155;
-    // erc1155MintableToken = process.env.FX_ERC1155_MINTABLE;
+  } else if (network.chainId === 719) {
+    // Puppynet Testnet
+    fxChild = config.testnet.fxChild.address;
+    erc20Token = config.testnet.fxERC20.address;
+    erc20MintableToken = config.testnet.fxMintableERC20.address;
+    rootERC20Token = config.testnet.rootFxERC20.address;
   }
 
   const ERC20 = await hre.ethers.getContractFactory("FxERC20ChildTunnel");
