@@ -3,8 +3,8 @@ const config = require("../config/config.json");
 const hre = require("hardhat");
 
 // Use your own deployed child tunnel addresses here instead!
-const fxERC20ChildTunnel = "0x14aBA986ACcd05CF391E14d29A02eA94a564f0Ae";
-const fxMintableERC20ChildTunnel = "0x61f98AB05359DAc56B1c2C0021E77Eb2C68025c9";
+const fxERC20ChildTunnel = "0xbF27854b665F7430118042b3DFB7D000f0F28aD5";
+const fxMintableERC20ChildTunnel = "0x7677072669d8c6db9638f48A293A2e522cb2D0a4";
 // const fxERC721ChildTunnel = "0x96d26FCA4cB14e14CABc28eF8bc8Aba0E03702A8";
 // const fxMintableERC721ChildTunnel =
 //   "0x48e3794678063E2a0188c9008023F32F79c521EE";
@@ -39,21 +39,8 @@ async function main() {
     // Goerli Testnet
     fxRoot = config.testnet.fxRoot.address;
     checkpointManager = config.testnet.checkpointManager.address;
-    fxERC20 = process.env.FX_ERC20;
+    fxERC20 = config.testnet.fxERC20.address;
     rootFxERC20 = config.testnet.rootFxERC20.address;
-    // fxERC721 = config.testnet.fxERC721.address;
-    // rootFxERC721 = config.testnet.rootFxERC721.address;
-    // fxERC1155 = config.testnet.fxERC1155.address;
-    // rootFxERC1155 = config.testnet.rootFxERC1155.address;
-  } else {
-    fxRoot = process.env.FX_ROOT;
-    checkpointManager = process.env.CHECKPOINT_MANAGER;
-    fxERC20 = process.env.FX_ERC20;
-    rootFxERC20 = process.env.FX_ERC20_MINTABLE;
-    fxERC721 = process.env.FX_ERC721;
-    rootFxERC721 = process.env.FX_ROOT_ERC721;
-    fxERC1155 = process.env.FX_ERC1155;
-    rootFxERC1155 = process.env.FX_ERC1155_MINTABLE;
   }
 
   const ERC20 = await hre.ethers.getContractFactory("FxERC20RootTunnel");
